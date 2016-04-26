@@ -1,7 +1,7 @@
 function [ boxes ] = covGrouping( P, m )
     boxes = java.util.ArrayList;
     for i = 1:length(P)
-       box = java.util.HashSet;
+       box = java.util.ArrayList;
        box.add(i);
        boxes.add(box);
     end
