@@ -34,7 +34,6 @@ function [ boxes ] = covGrouping( P, m )
         
         box1 = boxes.remove(box1index);
         
-        
         box2index = -1;
         for i = 0:boxes.size() - 1
             if boxes.get(i).contains(col) 
@@ -43,8 +42,18 @@ function [ boxes ] = covGrouping( P, m )
         end
         
         box2 = boxes.remove(box2index);
-        box1.addAll(box2);
-        boxes.add(box1);
+
+        union = java.util.ArrayList;
+        union.addAll(box1);
+        union.addAll(box2);
+        
+        newMemory = memoryUsage(boxes) + union.size()^2 - box1.size()^2 - box2.size()^2;
+        if newMemory > m 
+            boxes.add(union);
+        else
+            boxes.add(box1);
+            boxes.add(box2);
+        end
     end
 end
 

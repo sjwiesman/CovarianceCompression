@@ -3,7 +3,7 @@ Y = [];
 Z = [];
 R = [];
 
-for i = 20:20
+for i = 2:6
     P = randn(i);
     P = P * P';
     detP = det(P);
