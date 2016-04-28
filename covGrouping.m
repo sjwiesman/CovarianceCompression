@@ -1,7 +1,7 @@
 function [ boxes ] = covGrouping( P, m )
-    boxes = java.util.ArrayList;
+    boxes = javaObject('java.util.ArrayList');
     for i = 1:length(P)
-       box = java.util.ArrayList;
+       box = javaObject('java.util.ArrayList');
        box.add(i);
        boxes.add(box);
     end
@@ -43,7 +43,7 @@ function [ boxes ] = covGrouping( P, m )
         
         box2 = boxes.remove(box2index);
 
-        union = java.util.ArrayList;
+        union = javaObject('java.util.ArrayList');
         union.addAll(box1);
         union.addAll(box2);
         

@@ -18,21 +18,26 @@ for i = 2:6
     end
 end
 
-figure;
-plot(Y,R);
+X
+Y
+Z
+R
 
-figure;
-scatter3(X,Y,Z);
-hold on;
-xlabel('Original Size');
-ylabel('Compressed Size');
-zlabel('Differnce in Determinant');
-hold off;
+%figure;
+%plot(Y,R);
 
-figure;
-scatter3(X,Y,R);
-hold on;
-xlabel('Original Size');
-ylabel('Compressed Size');
-zlabel('Ratio');
-hold off;
+%figure;
+%scatter3(X,Y,Z);
+%hold on;
+%xlabel('Original Size');
+%ylabel('Compressed Size');
+%zlabel('Differnce in Determinant');
+%hold off;
+
+%figure;
+%scatter3(X,Y,R);
+%hold on;
+%xlabel('Original Size');
+%ylabel('Compressed Size');
+%zlabel('Ratio');
+%hold off;
