@@ -32,7 +32,9 @@ function [ boxes ] = covGrouping( P, m )
             continue;
         end
         
-        box1 = boxes.remove(box1index);
+        % index is a scalar which isn't an int which triggers the wrong java call
+        % which then makes box1 a bool and then everything breaks
+        box1 = boxes.remove(int64(box1index));
         
         box2index = -1;
         for i = 0:boxes.size() - 1
@@ -41,7 +43,7 @@ function [ boxes ] = covGrouping( P, m )
             end
         end
         
-        box2 = boxes.remove(box2index);
+        box2 = boxes.remove(int64(box2index));
 
         union = javaObject('java.util.ArrayList');
         union.addAll(box1);
