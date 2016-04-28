@@ -6,7 +6,7 @@ function [ boxes ] = covGrouping( P, m )
        boxes.add(box);
     end
     
-    correlations = abs(corrcoef(P));
+    correlations = abs(corr(P));
     for i = 1:length(correlations)
         correlations(i,i) = 0;
     end
