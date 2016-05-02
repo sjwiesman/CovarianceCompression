@@ -3,12 +3,14 @@ Y = [];
 Z = [];
 R = [];
 
-for i = 2:6
+for i = 2:100
     P = randn(i);
     P = P * P';
     detP = det(P);
-    for m = 2*i:i^2
+    for m = i:i^2
         Pnew = covCompression(P, m);
+i
+m
         assert(all(eig(Pnew - P) >= 0));
         detNew = det(Pnew);
         X = [X i^2];
@@ -18,10 +20,6 @@ for i = 2:6
     end
 end
 
-X
-Y
-Z
-R
 
 %figure;
 %plot(Y,R);
@@ -41,3 +39,5 @@ R
 %ylabel('Compressed Size');
 %zlabel('Ratio');
 %hold off;
+
+save -mat output_values X Y Z R
