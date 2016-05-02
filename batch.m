@@ -1,4 +1,4 @@
-function = batch(start_val,end_val,filename)
+function batch(start_val,end_val,filename)
 
 X = [];
 Y = [];
@@ -22,10 +22,10 @@ R = [];
 
         end
         if (rem(i,5) == 0)
-            save -mat filename X Y Z R
+            save('-mat',filename,'X','Y','Z','R');
         endif
     end
 
-    save -mat filename X Y Z R
+    save('-mat',filename,'X','Y','Z','R');
 
 end
