@@ -47,12 +47,12 @@ function [ boxes ] = covGrouping( P, m )
         union.addAll(box1);
         union.addAll(box2);
         
-        newMemory = memoryUsage(boxes) + union.size()^2 - box1.size()^2 - box2.size()^2;
+        newMemory = memoryUsage(boxes) + union.size()^2;
         if newMemory > m 
-            boxes.add(union);
-        else
             boxes.add(box1);
             boxes.add(box2);
+        else
+            boxes.add(union);
         end
     end
 end
