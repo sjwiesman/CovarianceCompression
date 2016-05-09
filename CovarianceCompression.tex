@@ -172,8 +172,20 @@ To do this each element shall be multiplied by $\frac{n}{d}$ where $n$ is the nu
 }	
 \end{algorithm}
 
+\section{Examination}
+This algorithm for covariance compression is greedy and may not always generate the most optimal solution. 
+Consider the case when calculating groupings where in the current iteration $G = \left[\{1,2\},\{3\},\{4,5\}\right]$. 
+It may be that the highest correlation coefficient is between $1$ and $3$ resulting in $G = \left[\{1,2,3\},\{4,5\}\right]$.
+However, it may be the case that while the correlation between $1$ and $3$ is high the correlation between $2$ and $3$ is very small and it would have been better to add $3$ to the set $\{4,5\}$ were the correlations are both reasonably large. 
+The issue is that there is no way of finding the best set of groupings without looking at every permutation whose memory usage is within bounds and as such it is our belief that a greedy algorithm provides a sufficient approximation that runs in a reasonable amount of time. 
+ 
+This algorithm was examined for random matrices containing 2 to 20 diagonal elements. 
+For each sized matrix we then looked at compressing it to using all values of $m$ in the range $\left[n, n^2\right]$
+(note: we discovered some last minute issues with our algorithm and had to rerun our tests with the updated version at the last minute, larger matrices will be tested against if and when preparing for publication).
+
 \clearpage
 \appendix
+Matlab allows for native use of java collections which allowed for these algorithms to be more simply implemented. 
 \section{Pseudocode}
 \lstinputlisting{covGrouping.m}
 \lstinputlisting{covCompression.m}
