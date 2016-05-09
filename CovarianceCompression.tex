@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{algorithm2e}
 \usepackage{listings}
+\usepackage{graphicx}
 
 \title{Covariance Compression}
 \author{Seth Wiesman\\Will Starms}
@@ -184,10 +185,17 @@ This algorithm was examined for random matrices containing 2 to 20 diagonal elem
 For each sized matrix we then looked at compressing it to using all values of $m$ in the range $\left[n, n^2\right]$
 (note: we discovered some last minute issues with our algorithm and had to rerun our tests with the updated version at the last minute, larger matrices will be tested against if and when preparing for publication).
 
+For each of these matrices the compressed matrices we compared the original size of the covariance and \% of elements saved -- calculated as $\frac{m}{n^2}$ -- to the difference between the determinant of compressed covariance and the determinant of the original covariance. 
+
+Below is a surface generating using the total original size, \% of elements saved, and log of the difference in determinants. 
+The log was used because the raw values grow exponentially and so MatLab was unable to calculate a surface. 
+
+\includegraphics[scale=0.75]{plot}
+
 \clearpage
 \appendix
-Matlab allows for native use of java collections which allowed for these algorithms to be more simply implemented. 
+MatLab allows for native use of java collections which allowed for these algorithms to be more simply implemented. 
 \section{Pseudocode}
-\lstinputlisting{covGrouping.m}
-\lstinputlisting{covCompression.m}
+\lstinputlisting[language=Matlab]{covGrouping.m}
+\lstinputlisting[language=Matlab]{covCompression.m}
 \end{document}
