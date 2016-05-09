@@ -16,12 +16,12 @@ Here we provide an algorithm for compressing a covariance matrix to only use a s
 The algorithm for covariance compression is broken into two parts; determining which diagonal elements should be blocked together, and the second is computing a new covariance that maintains only those correlations. 
 
 \subsection{covGrouping}
-The first algorithm presented is $covGrouping$ which takes in a $n \times n$ covariance matrix $P$ and maximum memory usage $m$ and returns a list of sets $G$, where each set contains the diagonal elements which should be grouped together. 
+The first algorithm presented is $covGrouping$ which takes in an $n \times n$ covariance matrix $P$ and maximum memory usage $m$ and returns a list of sets $G$, where each set contains the diagonal elements which should be grouped together. 
 The memory usage of the covariance generated from $G$ is $\sum_{g \in G}\mid g \mid^2$.
 It is only defined for $n \leq m$ because smaller values of $m$ would require diagonal elements to be discarded which we feel should be left up to a domain expert. 
 If $m = n^2$, the original covariance should be returned unchanged. 
 
-Each diagonal element in the matrix is specified by just is row number, i.e. element $1$ specifies the diagonal element at $P_{1,1}$.
+Each diagonal element in the matrix is specified by just its row number, i.e. element $1$ specifies the diagonal element at $P_{1,1}$.
 We begin by generating a list of size $n$ where each element is a set containing a single diagonal element index. 
 If $m = n$ we would be finished. 
 \begin{figure}
@@ -35,7 +35,7 @@ We now generate the correlation coefficient matrix $C$ of out covariance $P$ and
 The correlation coefficients will be used to determine which diagonal elements should be grouped together. 
 
 
-Our list is iterated on until changing the result list $G$ would result in it generating a covariance whose memory usage is greater than $m$ or there are not more non-zero correlation coefficients.
+Our list is iterated on until adding elements to result list $G$ would result in a covariance whose memory usage is greater than $m$ or there are no more non-zero correlation coefficients.
 The row and column of the largest element in $C$ and if the element at that index is $0$ then return, otherwise set the elements $C_{row,col}$ and $C_{col,row}$ are set to $0$.  
 The sets containing the numbers $col$ and $row$ are found and removed from the set, if they are the same set then continue to the next iteration of the loop. 
 Note, in practice the first set will have to be found and removed before the second is found to avoid iterator invalidation. 
