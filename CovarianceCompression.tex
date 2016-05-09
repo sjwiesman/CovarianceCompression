@@ -36,13 +36,13 @@ We now generate the correlation coefficient matrix $C$ of out covariance $P$ and
 The correlation coefficients will be used to determine which diagonal elements should be grouped together. 
 
 
-Our list is iterated on until adding elements to result list $G$ would result in a covariance whose memory usage is greater than $m$ or there are no more non-zero correlation coefficients.
-The row and column of the largest element in $C$ and if the element at that index is $0$ then return, otherwise set the elements $C_{row,col}$ and $C_{col,row}$ are set to $0$.  
-The sets containing the numbers $col$ and $row$ are found and removed from the set, if they are the same set then continue to the next iteration of the loop. 
+Our list is iterated on until adding elements to result list $G$ would result in a covariance whose memory usage is greater than $m$, or there are no more non-zero correlation coefficients.
+The row and column of the largest element in $C$ is found and if the element at that index is $0$ then return, otherwise set the elements $C_{row,col}$ and $C_{col,row}$ are set to $0$. 
+The sets containing the numbers $col$ and $row$ are found and removed from the set; if they are the same set, then continue to the next iteration of the loop. 
 Note, in practice the first set will have to be found and removed before the second is found to avoid iterator invalidation. 
 Next the new memory usage is calculated as the memory usage of the list $G$ plus the square of the size of the union of the two sets found. 
 If this new memory is less than or equal to $m$, the unionized set is inserted into $G$, otherwise the two sets are returned unchanged. 
-Once no more changes can be made the final list of groupings is returned. 
+Once no more changes can be made, the final list of groupings is returned. 
 
 \begin{figure}[h]
 $$
@@ -150,11 +150,11 @@ where the indexes of the non-zero values are calculated using the algorithm in t
 \subsection{covCompression}
 The second algorithm, $covCompression$, takes in a covariance matrix $P$ of size $n \times n$ and returns a new covariance that only has $m$ non-zero elements while still remaining conservative. 
 It begins by generating groupings by calling the $covGrouping$ function defined above. 
-Then for each set in the list the cross product of that set with itself. 
-These set of pairs represent the elements in the original covariance $P$ that should be saved. 
+Then, for each set in the list, the cross product of that set with itself. 
+These sets of pairs represent the elements in the original covariance $P$ that should be saved. 
 
-Because some number of elements have been dropped the new covariance must be inflated so it may remain conservative. 
-To do this each element shall be multiplied by $\frac{n}{d}$ where $n$ is the number of elements in $P$ and $d$ is the number of elements in that particular numbers grouping.  
+Because some number of elements have been dropped, the new covariance must be inflated so it may remain conservative. 
+To do this, each element shall be multiplied by $\frac{n}{d}$ where $n$ is the number of elements in $P$ and $d$ is the number of elements in that particular grouping.  
 
 \begin{algorithm}
 \SetKwFunction{covCompression}{covCompression}
