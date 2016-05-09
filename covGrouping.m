@@ -1,9 +1,9 @@
-function [ boxes ] = covGrouping( P, m )
-    boxes = java.util.ArrayList;
+function [ groupings ] = covGrouping( P, m )
+    groupings = java.util.ArrayList;
     for i = 1:length(P)
        box = java.util.ArrayList;
        box.add(i);
-       boxes.add(box);
+       groupings.add(box);
     end
     
     correlations = abs(corrcoef(P));
@@ -11,7 +11,7 @@ function [ boxes ] = covGrouping( P, m )
         correlations(i,i) = 0;
     end
     
-    while memoryUsage(boxes) < m
+    while memoryUsage(groupings) < m
         [maxElem, linearIndex] = max(correlations(:));
         if maxElem == 0
             break;
@@ -21,38 +21,38 @@ function [ boxes ] = covGrouping( P, m )
         correlations(row,col) = 0;
         correlations(col,row) = 0;
         
-        box1index = -1;
-        for i = 0:boxes.size() - 1
-            if boxes.get(i).contains(row) 
-                box1index = i;
+        group1index = -1;
+        for i = 0:groupings.size() - 1
+            if groupings.get(i).contains(row) 
+                group1index = i;
             end
         end
        
-        if boxes.get(box1index).contains(col)
+        if groupings.get(group1index).contains(col)
             continue;
         end
         
-        box1 = boxes.remove(box1index);
+        group1 = groupings.remove(group1index);
         
-        box2index = -1;
-        for i = 0:boxes.size() - 1
-            if boxes.get(i).contains(col) 
-                box2index = i;
+        group2index = -1;
+        for i = 0:groupings.size() - 1
+            if groupings.get(i).contains(col) 
+                group2index = i;
             end
         end
         
-        box2 = boxes.remove(box2index);
+        group2 = groupings.remove(group2index);
 
         union = java.util.ArrayList;
-        union.addAll(box1);
-        union.addAll(box2);
+        union.addAll(group1);
+        union.addAll(group2);
         
-        newMemory = memoryUsage(boxes) + union.size()^2;
+        newMemory = memoryUsage(groupings) + union.size()^2;
         if newMemory > m 
-            boxes.add(box1);
-            boxes.add(box2);
+            groupings.add(group1);
+            groupings.add(group2);
         else
-            boxes.add(union);
+            groupings.add(union);
         end
     end
 end
